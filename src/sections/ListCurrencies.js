@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
-import { parseObjectToArray, formatToDecimals } from '../utils/functions'
+import { parseObjectToArray, formatToDecimals, calculRateToRender } from '../utils/functions'
 
 const ListCurrencies = (props) => {     //props.euroBTC props.allCurr
     //console.log(JSON.stringify(props.allCurr, null, 4));
@@ -10,13 +10,15 @@ const ListCurrencies = (props) => {     //props.euroBTC props.allCurr
         return (
             <TouchableOpacity onPress={() => console.log(item)} >
                 <View style={styles.item}>
-                    <Image style={styles.flag}
-                        source={{
-                            uri: item.flag,
-                        }}
-                    />
+                    <View style={styles.flagBox}>
+                        <Image style={styles.flag}
+                            source={{
+                                uri: item.flag,
+                            }}
+                        />
+                    </View>
                     <Text style={styles.curr}>{item.id}</Text>
-                    <Text style={styles.price}>{item.rate * parseFloat(formatToDecimals(props.euroBTC))}</Text>
+                    <Text style={styles.price}>{calculRateToRender(item.id, item.rate, formatToDecimals(props.euroBTC))}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -37,8 +39,10 @@ export default ListCurrencies
 
 const styles = StyleSheet.create({
     section: {
-        maxHeight: 200,
+        maxHeight: 300,
+        width: "80%",
         backgroundColor: "rgba(255,255,255,0.2)",
+        alignSelf: "center"
     },
     item: {
         flexDirection: "row",
@@ -46,10 +50,17 @@ const styles = StyleSheet.create({
     },
     curr: {
         fontSize: 20,
-        width: "40%"
+        width: "35%",
+        alignItems: "center"
     },
     price: {
-        width: "40%"
+        width: "35%",
+        alignItems: "center",
+        fontWeight: "500"
+    },
+    flagBox: {
+        width: "30%",
+        alignItems: "center"
     },
     flag: {
         height: 20,

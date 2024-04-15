@@ -3,8 +3,16 @@ export const formatToEuroString = (amount) => {
     return amount.replace(/[,]/g, ' ').replace(/[.]/g, ',')
 }
 export const formatToDecimals = (amount) => {
-    let formatedAmount = amount.replace(/[,]/g, '').replace(/[.]/g, ',')
+    let formatedAmount = amount.replace(/[,]/g, '').replace(/[.]/g, '.')
     return parseFloat(formatedAmount)
+}
+
+export const calculRateToRender = (currency, rate, price) => {
+    const shortCurrency = currency.toLocaleLowerCase().slice(0, 2)
+    const priceToRender = new Intl.NumberFormat(shortCurrency, { style: 'currency', currency: currency }).format(
+        price * rate,
+    )
+    return priceToRender
 }
 
 export const parseObjectToArray = (obj) => {        // good for Flatlist but not for virtualizedlist
@@ -16,13 +24,11 @@ export const parseObjectToArray = (obj) => {        // good for Flatlist but not
             id: key,
             currency_name: value.currency_name,
             rate: value.rate,
-            //symbol: customCurr[key].symbol_native,    // wanted to have proper money unicode but it doesnt get the key; customCurr["USD"].symbol_native works fine
-            flag: "https://flagpedia.net/data/flags/normal/" + key.slice(0, 2) + ".png"
+            flag: "https://flagpedia.net/data/flags/normal/" + key.toLocaleLowerCase().slice(0, 2) + ".png"
         };
         result.push(d);
     }
     result.sort((a, b) => a.id > b.id ? 1 : -1);
-    // {...result} to have an object instead
     return result
 }
 

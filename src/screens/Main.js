@@ -5,6 +5,7 @@ import CurrentRate from '../sections/CurrentRate'
 import ListCurrencies from '../sections/ListCurrencies'
 import Divider from '../components/ui/Divider'
 import { useGetBTC, useGetCurr } from '../hooks/customHooks'
+import { ActivityIndicator } from 'react-native'
 
 const Main = () => {
     const [getBitcoin, timeStamp, EUR, USD, GBP, isLoadingBTC, errorBTC] = useGetBTC()
@@ -25,9 +26,12 @@ const Main = () => {
         <>
             <CurrentRate rates={{ timeStamp: timeStamp, eur: EUR, usd: USD, gbp: GBP }} isLoading={isLoadingBTC} />
             <Divider />
+
             {
-                responseCurr && EUR &&
-                <ListCurrencies euroBTC={EUR} allCurr={responseCurr} />
+                isLoadingCurr || !responseCurr || !EUR ?
+                    <ActivityIndicator />
+                    :
+                    <ListCurrencies euroBTC={EUR} allCurr={responseCurr} />
             }
             <Divider />
             <Calculation />
