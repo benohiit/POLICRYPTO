@@ -7,7 +7,7 @@ const Calculation = ({ currFocused, euroBTC }) => {
     const [result, setResult] = useState(null)
     return (
         <View style={styles.section}>
-            <Text style={[styles.simpleText, styles.simpleText]}>Choose the currency above and calcul your invest</Text>
+            <Text style={[styles.simpleText, styles.simpleText]}>Choose the currency above and calculate your invest</Text>
 
             <View style={styles.line}>
                 <Text style={[styles.simpleText, styles.curr]}>{currFocused?.id}</Text>
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
         height: 40,
         width: 150,
         paddingHorizontal: 5,
+        color: "#aaa",
         backgroundColor: '#222222',
         shadowColor: '#fff',
         shadowOffset: { width: 0, height: 8 },

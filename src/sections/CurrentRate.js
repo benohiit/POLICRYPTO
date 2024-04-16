@@ -14,7 +14,7 @@ const CurrentRate = (props) => {
                 </View>
                 <View style={styles.asideRight}>
                     {
-                        props.isLoading ? <ActivityIndicator /> :
+                        props.isLoading ? <ActivityIndicator size={"large"} /> :
                             <>
 
                                 <RateString curr={"eur"} amount={props.rates.eur} />

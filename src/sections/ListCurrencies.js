@@ -3,14 +3,14 @@ import React, { useEffect, useRef } from 'react'
 import { parseObjectToArray, formatToDecimals, calculRateToRender } from '../utils/functions'
 import { FormattedNumber, IntlProvider } from 'react-intl';
 import { LogBox } from 'react-native';
-const ListCurrencies = (props) => {     //props.euroBTC props.allCurr 
+const ListCurrencies = (props) => {
     const DATA = parseObjectToArray(props.allCurr)
-    const currencyFocused = useRef({
+    const currencyFocused = useRef({    // useref to not be reloaded every actualisation of the components, but should I declare it at the parent component? what's the best practice ?
         id: null,
         rate: null
-    })      // useref to not be reloaded every actualisation of the components
+    })
     useEffect(() => {
-        LogBox.ignoreLogs(['[@formatjs/intl Error FORMAT_ERROR] Error formatting number.']);
+        LogBox.ignoreLogs(['[@formatjs/intl Error FORMAT_ERROR] Error formatting number.']);   //see comment below (line 37)
     }, [])
 
     const renderItem = ({ item }) => {
@@ -31,11 +31,11 @@ const ListCurrencies = (props) => {     //props.euroBTC props.allCurr
                     <Text style={[styles.simpleText, styles.curr]}>{item.id}</Text>
                     <Text style={[styles.simpleText, styles.currName]}>{item.currency_name}</Text>
                     {/*<Text style={styles.price}>{calculRateToRender(item.id, item.rate, formatToDecimals(props.euroBTC))}</Text>
-                    just sometimes makes the fatal error 
+                    just sometimes makes the fatal error: 
                     -> RangeError: TaskQueue: Error with task : com.facebook.hermes.intl.JSRangeErrorException: Malformed currency code !
                     
-                    But with the FormattedNumber from react-intl under, it does the same but handle the error as a log that I ignore, I know it's not the best process against log errors :p
-                    I need to dive deeper to see what would be the best and to solve the problem to show the currency properly
+                    But with the FormattedNumber from react-intl under, it does the same but handle the error as a log that I ignore, then its working fine, I know it's not the best process against log errors :p
+                    I need to dive deeper to see what would be the best to show the currency properly without any error logs
                     */}
                     <Text style={[styles.simpleText, styles.price]}>
                         <IntlProvider locale='fr'>
