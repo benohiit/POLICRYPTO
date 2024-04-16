@@ -12,7 +12,7 @@ export default RateString
 const styles = StyleSheet.create({
     amount: {
         fontSize: 20,
-        color: "#000",
-        fontWeight: "700"
+        color: "#FFF",
+        fontWeight: "700",
     }
 })

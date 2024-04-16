@@ -25,7 +25,7 @@ const CurrentRate = (props) => {
                 </View>
             </View>
             <View style={styles.bottomLine}>
-                <Text style={styles.simpleText}> last update: <Text style={{ fontWeight: "700" }}>{props.rates.timeStamp}</Text></Text>
+                <Text style={styles.simpleText}> last update: {props.rates.timeStamp}</Text>
             </View>
         </>
     )
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         flexDirection: "column",
         justifyContent: 'center',
+        color: "#FFF"
     },
     asideLeft: {
         width: '40%',
@@ -54,6 +55,9 @@ const styles = StyleSheet.create({
         resizeMode: "stretch",
     },
     bottomLine: {
-        alignSelf: "center"
+        alignSelf: "center",
+    },
+    simpleText: {
+        color: "#FFF"
     }
 })

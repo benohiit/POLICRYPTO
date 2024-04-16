@@ -16,8 +16,6 @@ export const calculRateToRender = (currency, rate, price) => {
 }
 
 export const parseObjectToArray = (obj) => {        // good for Flatlist but not for virtualizedlist
-    //const customCurr = require('../utils/currency.json')
-
     const result = [];
     for (const [key, value] of Object.entries(obj.rates)) {
         const d = {
@@ -29,6 +27,12 @@ export const parseObjectToArray = (obj) => {        // good for Flatlist but not
         result.push(d);
     }
     result.sort((a, b) => a.id > b.id ? 1 : -1);
+    return result
+}
+
+export const calcInBTC = (amount, rate, euroBTC) => {
+    let result = parseFloat(amount) / parseFloat(rate)
+    result = result / formatToDecimals(euroBTC)
     return result
 }
 

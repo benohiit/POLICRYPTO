@@ -1,5 +1,5 @@
 //import { View, Text } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Calculation from '../sections/Calculation'
 import CurrentRate from '../sections/CurrentRate'
 import ListCurrencies from '../sections/ListCurrencies'
@@ -10,13 +10,18 @@ import { ActivityIndicator } from 'react-native'
 const Main = () => {
     const [getBitcoin, timeStamp, EUR, USD, GBP, isLoadingBTC, errorBTC] = useGetBTC()
     const [getAllCurrFromEuro, isLoadingCurr, errorCurr, responseCurr] = useGetCurr()
+    const [focus, setFocus] = useState(null)
+
+    const handleCurrencyFocus = (id, rate) => {
+        setFocus({ id: id, rate: rate })
+    }
     useEffect(() => {
         getBitcoin()   //Need to be lunched a first time
         getAllCurrFromEuro()    //change only once a day, so we suppose we need to lunch it only once
         const interval = setInterval(() => {  //actualise crypto            
             //console.log("refresh");
             getBitcoin();
-        }, 1500000);  //1 sec = 1000 
+        }, 15000);  //Actualisation every 15sec
         return () => clearInterval(interval);
     }, []);
 
@@ -31,10 +36,10 @@ const Main = () => {
                 isLoadingCurr || !responseCurr || !EUR ?
                     <ActivityIndicator />
                     :
-                    <ListCurrencies euroBTC={EUR} allCurr={responseCurr} />
+                    <ListCurrencies euroBTC={EUR} allCurr={responseCurr} /* forwardedRef={currencyFocused}  */ handleCurrencyFocus={handleCurrencyFocus} />
             }
             <Divider />
-            <Calculation />
+            <Calculation currFocused={focus} euroBTC={EUR} />
         </>
     )
 }
